@@ -60,6 +60,8 @@ Trabalho-PL/
 └── saida/              # Ficheiros criados por EXPORT TABLE
     └── est.csv         # (exemplo exportado pela execução)
 
+
+
 ---
 
 ## 📌 Conclusão do Projeto
