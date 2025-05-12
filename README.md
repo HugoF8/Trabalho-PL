@@ -42,6 +42,7 @@ A linguagem CQL permite a execução das seguintes instruções:
 
 ## 📁 Estrutura do Projeto
 
+```plaintext
 Trabalho-PL/
 ├── main.py             # Ponto de entrada do interpretador
 ├── cql_lexer.py        # Analisador léxico da linguagem CQL (PLY)
