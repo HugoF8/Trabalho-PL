@@ -1,5 +1,3 @@
-# cql_eval.py (versão alterada para formatar a saída como tabelas com títulos)
-
 import csv
 from cql_grammar import *
 from collections import OrderedDict
@@ -16,12 +14,12 @@ def carregar_csv(filename):
         headers = next(reader)
         return [dict(zip(headers, row)) for row in reader]
     except Exception as e:
-        print(f"Erro ao carregar CSV {filename}: {e}")
+        print(f"Erro ao carregar o ficheiro CSV {filename}: {e}")
         return []
 
 def salvar_csv(filename, data):
     if not data:
-        print(f"{filename}: sem dados para salvar.")
+        print(f"{filename}: sem dados para guardar.")
         return
     headers = list(data[0].keys())
     with open(filename, 'w', newline='', encoding='utf-8') as f:
@@ -130,7 +128,7 @@ class Evaluator:
 
     def visit_ProcedureNode(self, node):
         self.mem.store_proc(node.name, node.statements)
-        print(f"Procedimento '{node.name}' armazenado.")
+        print(f"Procedimento '{node.name}' guardado.")
 
     def visit_CallProcedureNode(self, node):
         stmts = self.mem.get_proc(node.name) or []

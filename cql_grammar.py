@@ -1,11 +1,8 @@
-# cql_grammar.py
-
 from ply import yacc
 from cql_lexer import CQLLexer
 
-#
-# AST Nodes
-#
+
+# Árvore Sintática Abstrata
 class ASTNode:
     pass
 
@@ -73,9 +70,8 @@ class CallProcedureNode(ASTNode):
     def __init__(self, name):
         self.name = name
 
-#
-# Parser
-#
+
+# Gramática
 class CQLGrammar:
     tokens = CQLLexer.tokens
 
@@ -84,7 +80,7 @@ class CQLGrammar:
         self.lexer.build()
         self.parser = yacc.yacc(module=self)
 
-    # Program
+    # Programa
     def p_program(self, p):
         "program : statements"
         p[0] = ProgramNode(p[1])
@@ -172,7 +168,7 @@ class CQLGrammar:
         statement : CREATE TABLE IDENTIFIER select_source SEMICOLON
                   | CREATE TABLE IDENTIFIER SELECT select_columns FROM IDENTIFIER where_clause limit_clause SEMICOLON
         """
-        # Se for a forma com SELECT inline (subselect)
+        # Se for a forma com SELECT inline
         if len(p) > 5 and p[4] == 'SELECT':
             cols   = p[5]
             table  = p[7]
@@ -208,7 +204,7 @@ class CQLGrammar:
         if p:
             raise SyntaxError(f"Sintaxe inválida: token {p.value!r} (tipo {p.type}) na linha {p.lineno}")
         else:
-            raise SyntaxError("Sintaxe inválida no fim do ficheiro (EOF)")
+            raise SyntaxError("Sintaxe inválida no ficheiro")
 
     def parse(self, text):
         return self.parser.parse(text, lexer=self.lexer.lexer)

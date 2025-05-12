@@ -1,10 +1,7 @@
-# cql_lexer.py
-
 import ply.lex as lex
 import re
 
 class CQLLexer:
-    """Analisador léxico para a linguagem CQL (Comma Query Language)."""
 
     # Lista de nomes de tokens
     tokens = [
@@ -46,12 +43,13 @@ class CQLLexer:
         'procedure': 'PROCEDURE',
         'do': 'DO',
         'end': 'END',
+        'and': 'AND',  # <- adiciona "and" às palavras reservadas
     }
 
     # Junta os tokens das palavras reservadas
     tokens = tokens + list(reserved.values())
 
-    # Definições de expressões regulares para tokens
+    # Definições de expressões regulares para tokens simples
     t_SEMICOLON = r';'
     t_COMMA     = r','
     t_LPAREN    = r'\('
@@ -64,13 +62,18 @@ class CQLLexer:
     t_GE        = r'>='
     t_LE        = r'<='
     t_DOT       = r'\.'
-    t_AND       = r'[Aa][Nn][Dd]'
 
-    # Ignora espaços em branco e tabs
-    t_ignore = ' \t\n'
+    # Ignorar espaços, tabs, quebras de linha e \r (Windows)
+    t_ignore = ' \t\n\r'
 
-    def t_COMMENT(self, t):
-        r'--.*|{\-[\s\S]*?\-}'
+    # Comentário de linha
+    def t_COMMENT_SINGLE(self, t):
+        r'--[^\n\r]*'
+        pass
+
+    # Comentário multilinha
+    def t_COMMENT_MULTI(self, t):
+        r'{-[\s\S]*?-}'
         pass
 
     def t_STRING(self, t):
@@ -89,10 +92,9 @@ class CQLLexer:
         return t
 
     def t_error(self, t):
-        raise SyntaxError(f"Illegal character {t.value[0]!r}")
+        raise SyntaxError(f"Caracter Invalido: {t.value[0]!r}")
 
     def build(self, **kwargs):
-        """Cria o lexer com base neste módulo."""
         self.lexer = lex.lex(module=self, **kwargs)
         return self.lexer
 
@@ -100,7 +102,6 @@ class CQLLexer:
         self.lexer.input(data)
 
     def get_tokens(self, data):
-        """Retorna a lista de tokens para uma string de entrada."""
         self.input(data)
         toks = []
         while True:
@@ -119,7 +120,7 @@ def test_lexer():
     data = """
     -- Comentário de linha
     IMPORT TABLE estacoes FROM "estacoes.csv";
-    SELECT * FROM observacoes WHERE Temperatura > 22;
+    SELECT * FROM observacoes WHERE Temperatura > 22 AND Radiacao > 100;
     {- Comentário
        multilinha -}
     """

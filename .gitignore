@@ -1,0 +1,55 @@
+# Ignorar a pasta node_modules e seus arquivos
+node_modules/
+
+Arquivos de build
+*.o
+*.a
+*.so
+*.out
+*.exe
+
+Diretórios de build e temporários
+/build/
+*.dSYM/
+*.vs/
+*.idea/
+*.vscode/
+
+Logs e temporários
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+Arquivos do LaTeX
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.out
+*.bbl
+.blg
+
+Arquivos de debug
+gmon.out
+vgcore.
+
+Binários
+bin/
+*.bin
+
+Makefile temporários
+Makefile~
+
+
+
+-------------------------------------------
+.env
+/node_modules/
+package-lock.json
+package.json

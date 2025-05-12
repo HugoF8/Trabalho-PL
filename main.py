@@ -14,14 +14,12 @@ def print_help():
     print()
 
 def run_file(fname, parser, evaluator):
-    """Executa um script CQL (qualquer extensão)."""
     with open(fname, encoding='utf-8') as f:
         script = f.read()
     prog = parser.parse(script)
     evaluator.visit(prog)
 
 def run_datafile(fname, parser, evaluator):
-    """Importa e imprime automaticamente um ficheiro de dados (apenas .csv)."""
     name, _ = os.path.splitext(os.path.basename(fname))
     print(f"Importando '{fname}' → tabela '{name}'")
     evaluator.visit(ImportTableNode(name, fname))
@@ -29,7 +27,7 @@ def run_datafile(fname, parser, evaluator):
 
 def repl(parser, evaluator):
     print_header()
-    print("Digite comandos CQL (‘:help’ para ajuda, ‘:quit’ para sair)\n")
+    print("Escreva comandos CQL (‘:help’ para ajuda, ‘:quit’ para sair)\n")
     while True:
         try:
             line = input("cql> ").strip()
@@ -43,7 +41,7 @@ def repl(parser, evaluator):
             if line == ':help':
                 print_help()
             continue
-        # Garante ponto-e-vírgula final
+
         stmt = line if line.endswith(';') else line + ';'
         prog = parser.parse(stmt)
         evaluator.visit(prog)
@@ -56,11 +54,11 @@ def main():
     if len(sys.argv) > 1:
         arg = sys.argv[1]
         ext = os.path.splitext(arg)[1].lower()
-        # Agora só .csv é tratado como dados
+
         if ext == '.csv' and os.path.isfile(arg):
             run_datafile(arg, parser, evaluator)
         else:
-            # .fca, .cql, .txt, .cql.txt, etc. são todos scripts
+
             run_file(arg, parser, evaluator)
     else:
         repl(parser, evaluator)
