@@ -42,23 +42,23 @@ A linguagem CQL permite a execução das seguintes instruções:
 
 ## 📁 Estrutura do Projeto
 
+```plaintext
 Trabalho-PL/
+├── main.py             # Ponto de entrada do interpretador
+├── cql_lexer.py        # Analisador léxico da linguagem CQL (PLY)
+├── cql_grammar.py      # Analisador sintático + AST (PLY)
+├── cql_eval.py         # Avaliador semântico (interpretação da AST)
+├── README.md           # Este ficheiro
 │
-├── main.py # Ponto de entrada do interpretador
-├── cql_lexer.py # Analisador léxico da linguagem CQL (PLY)
-├── cql_grammar.py # Analisador sintático + AST (PLY)
-├── cql_eval.py # Avaliador semântico (interpretação da AST)
-├── README.md # Este ficheiro
+├── input/              # Scripts CQL (.fca)
+│   └── exemplo.fca     # Script de exemplo com todas as funcionalidades
 │
-├── input/ # Scripts CQL (.fca)
-│ └── exemplo.fca # Script de exemplo com todas as funcionalidades
+├── data/               # Dados de entrada (.csv)
+│   ├── estacoes.csv
+│   └── observacoes.csv
 │
-├── data/ # Dados de entrada (.csv)
-│ ├── estacoes.csv
-│ └── observacoes.csv
-│
-└── saida/ # Ficheiros gerados por EXPORT TABLE
-└── est.csv # (exemplo exportado pela execução)
+└── saida/              # Ficheiros criados por EXPORT TABLE
+    └── est.csv         # (exemplo exportado pela execução)
 
 ---
 
