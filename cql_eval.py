@@ -1,8 +1,12 @@
+import os 
 import csv
 from cql_grammar import *
 from collections import OrderedDict
 
 def carregar_csv(filename):
+    # Se o caminho não for absoluto nem contiver uma subpasta, adiciona 'data/'
+    if not os.path.isabs(filename) and not os.path.dirname(filename):
+        filename = os.path.join("data", filename)
     try:
         with open(filename, encoding='utf-8') as f:
             lines = [
@@ -21,7 +25,11 @@ def salvar_csv(filename, data):
     if not data:
         print(f"{filename}: sem dados para guardar.")
         return
+
+    if not os.path.isabs(filename) and not os.path.dirname(filename):
+        filename = os.path.join("saida", filename)
     headers = list(data[0].keys())
+    
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow(headers)

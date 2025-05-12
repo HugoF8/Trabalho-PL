@@ -9,9 +9,19 @@ def print_header():
     print("="*60)
 
 def print_help():
-    print(":help    mostrar esta ajuda")
-    print(":quit    sair")
-    print()
+    print("\nComandos disponíveis:")
+    print("  IMPORT TABLE nome FROM \"ficheiro.csv\";")
+    print("  EXPORT TABLE nome AS \"ficheiro.csv\";")
+    print("  DISCARD TABLE nome;")
+    print("  RENAME TABLE nome novo_nome;")
+    print("  PRINT TABLE nome;")
+    print("  SELECT * FROM tabela [WHERE condição] [LIMIT n];")
+    print("  CREATE TABLE nova SELECT * FROM tabela;")
+    print("  CREATE TABLE nova FROM t1 JOIN t2 USING(coluna);")
+    print("  PROCEDURE nome DO ... END")
+    print("  CALL nome;")
+    print("\nComandos do REPL:")
+    print("  :help  :quit     ")
 
 def run_file(fname, parser, evaluator):
     with open(fname, encoding='utf-8') as f:
@@ -37,6 +47,7 @@ def repl(parser, evaluator):
             continue
         if line.startswith(':'):
             if line in (':quit', ':exit'):
+                print("TÉ LOGO!")
                 break
             if line == ':help':
                 print_help()
@@ -45,6 +56,7 @@ def repl(parser, evaluator):
         stmt = line if line.endswith(';') else line + ';'
         prog = parser.parse(stmt)
         evaluator.visit(prog)
+        
 
 def main():
     parser    = create_parser()

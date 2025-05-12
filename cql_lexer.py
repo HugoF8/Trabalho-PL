@@ -20,7 +20,6 @@ class CQLLexer:
         'GE',
         'LE',
         'DOT',
-        'AND',
     ]
 
     # Lista de palavras reservadas
@@ -43,7 +42,7 @@ class CQLLexer:
         'procedure': 'PROCEDURE',
         'do': 'DO',
         'end': 'END',
-        'and': 'AND',  # <- adiciona "and" às palavras reservadas
+        'and': 'AND',
     }
 
     # Junta os tokens das palavras reservadas

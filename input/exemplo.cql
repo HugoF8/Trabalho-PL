@@ -1,9 +1,9 @@
 -- A. Configuração de tabelas de dados
-IMPORT TABLE estacoes FROM "data/estacoes.csv";
-IMPORT TABLE observacoes FROM "data/observacoes.csv";
+IMPORT TABLE estacoes FROM "estacoes.csv";
+IMPORT TABLE observacoes FROM "observacoes.csv";
 PRINT TABLE estacoes;
 PRINT TABLE observacoes;
-EXPORT TABLE estacoes AS "saida/est.csv";
+EXPORT TABLE estacoes AS "est.csv";
 RENAME TABLE estacoes est;
 PRINT TABLE est;
 
